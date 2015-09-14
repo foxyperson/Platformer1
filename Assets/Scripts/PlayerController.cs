@@ -29,15 +29,12 @@ public class PlayerController : MonoBehaviour {
 
 		if (grounded) {
 			hasDoubleJumped = false;
-			if (Input.GetKey(KeyCode.Space)) {
-				jumpCounter++;
+			if (Input.GetKey(KeyCode.Space))
 				jump = jumpVelocity;
-			}
 			else
 				jump = 0;
 		} else {
 			if (Input.GetKeyDown(KeyCode.Space) && !(hasDoubleJumped)){
-				jumpCounter++;
 				jump = jumpVelocity;
 				hasDoubleJumped = true;
 			}
