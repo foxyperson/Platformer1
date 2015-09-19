@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour {
 
 	public int deathDepth;
 	public Vector3 respawnPos;
-	int jumpCounter = 0;
+
+	public bool hasDoubleJump = false; 
 
 
 	// Use this for initialization
@@ -23,10 +24,9 @@ public class PlayerController : MonoBehaviour {
 	}*/
 	
 	// Update is called once per frame
-	void Update () {	
-		// Jump
-		
+	void Update () {
 
+		// Jump
 		if (grounded) {
 			hasDoubleJumped = false;
 			if (Input.GetKey(KeyCode.Space))
@@ -42,15 +42,13 @@ public class PlayerController : MonoBehaviour {
 				jump = GetComponent<Rigidbody>().velocity.y;
 		}
 
-		// Movement
 		moveX = Input.GetAxis("Horizontal") * moveVelocity;
 
 		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, 0);
 
 		// Death
-		if (this.transform.position.y < deathDepth) {
+		if (this.transform.position.y < deathDepth)
 			this.transform.position = respawnPos;
-		}
 	
 	}
 	// Grounded
@@ -59,5 +57,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	void OnTriggerExit() {
 		grounded = false;
+	}
+
+	public void setDoubleJump(bool b){
+		hasDoubleJump = b;
 	}
 }

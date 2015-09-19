@@ -12,7 +12,10 @@ public class DoubleJump : MonoBehaviour {
 	void Update () {
 
 	}
-	void OnTriggerEnter() {
-		Destroy (gameObject);
+	void OnTriggerEnter(Collision other) {
+		if (other.gameObject.tag == "Player") {
+			other.gameObject.GetComponent<PlayerController>().setDoubleJump(true);
+			Destroy (gameObject);
+		}
 	}
 }
