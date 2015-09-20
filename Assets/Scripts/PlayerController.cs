@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	private float moveX;
+	private float moveY;
 	public float moveVelocity;
 
 	private float jump;
@@ -15,7 +16,8 @@ public class PlayerController : MonoBehaviour {
 	public int deathDepth;
 	public Vector3 respawnPos;
 
-	public bool hasDoubleJump = false; 
+	private bool hasDoubleJump = false;
+	private bool hasDepthWalk = false;
 
 
 	// Use this for initialization
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 			else
 				jump = 0;
 		} else {
-			if (Input.GetKeyDown(KeyCode.Space) && !(hasDoubleJumped)){
+			if (Input.GetKeyDown(KeyCode.Space) && hasDoubleJump && !(hasDoubleJumped)){
 				jump = jumpVelocity;
 				hasDoubleJumped = true;
 			}
@@ -43,8 +45,10 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		moveX = Input.GetAxis("Horizontal") * moveVelocity;
+		if (hasDepthWalk)
+			moveY = Input.GetAxis("Vertical") * moveVelocity;
 
-		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, 0);
+		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveY);
 
 		// Death
 		if (this.transform.position.y < deathDepth)
@@ -61,5 +65,9 @@ public class PlayerController : MonoBehaviour {
 
 	public void setDoubleJump(bool b){
 		hasDoubleJump = b;
+	}
+
+	public void setDepthWalk(bool b){
+		hasDepthWalk = b;
 	}
 }

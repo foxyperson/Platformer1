@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoubleJump : MonoBehaviour {
+public class DepthWalk : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -10,11 +10,11 @@ public class DoubleJump : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+	
 	}
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Player") {
-			other.gameObject.GetComponent<PlayerController>().setDoubleJump(true);
+			other.gameObject.GetComponent<PlayerController>().setDepthWalk(true);
 			Destroy (gameObject);
 		}
 	}

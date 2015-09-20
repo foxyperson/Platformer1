@@ -32,5 +32,10 @@ public class CameraController : MonoBehaviour {
 		if (transform.position.x <= offsetCameraLowestX) {
 			transform.position = new Vector3(offsetCameraLowestX, transform.position.y, transform.position.z);
 		} 
+		/*transform.position = new Vector3(
+			-(Input.mousePosition.x-1000)/10,
+			-(Input.mousePosition.y-400)/10,
+			-15);
+		print (transform.position);*/
 	}
 }
