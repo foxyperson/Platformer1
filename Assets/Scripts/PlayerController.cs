@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	private float moveX;
-	private float moveY;
+	private float moveZ;
 	public float moveVelocity;
 
 	private float jump;
@@ -16,19 +16,20 @@ public class PlayerController : MonoBehaviour {
 	public int deathDepth;
 	public Vector3 respawnPos;
 
-	private bool hasDoubleJump = false;
-	private bool hasDepthWalk = false;
+	private bool hasDoubleJump = true;
+	private bool hasDepthWalk = true;
 
 
 	// Use this for initialization
-	/*void Start () {
-	
-	}*/
+	void Start () {
+		respawnPos = transform.position; // for debugging purposes
+	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		// Jump
+		print(grounded);
 		if (grounded) {
 			hasDoubleJumped = false;
 			if (Input.GetKey(KeyCode.Space))
@@ -46,9 +47,9 @@ public class PlayerController : MonoBehaviour {
 
 		moveX = Input.GetAxis("Horizontal") * moveVelocity;
 		if (hasDepthWalk)
-			moveY = Input.GetAxis("Vertical") * moveVelocity;
+			moveZ = Input.GetAxis("Vertical") * moveVelocity;
 
-		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveY);
+		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
 
 		// Death
 		if (this.transform.position.y < deathDepth)
@@ -56,11 +57,13 @@ public class PlayerController : MonoBehaviour {
 	
 	}
 	// Grounded
-	void OnTriggerEnter() {
-		grounded = true;
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.tag == "Ground")
+			grounded = true;
 	}
-	void OnTriggerExit() {
-		grounded = false;
+	void OnTriggerExit(Collider other) {
+		if (other.gameObject.tag == "Ground")
+			grounded = false;
 	}
 
 	public void setDoubleJump(bool b){
