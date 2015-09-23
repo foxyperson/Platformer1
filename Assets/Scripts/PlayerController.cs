@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
 		// Jump
-		print(grounded);
 		if (grounded) {
 			hasDoubleJumped = false;
 			if (Input.GetKey(KeyCode.Space))
