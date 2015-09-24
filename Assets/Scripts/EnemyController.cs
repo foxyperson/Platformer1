@@ -18,12 +18,14 @@ public class EnemyController : MonoBehaviour {
 	void Update () {
 		Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
 		float xDiff = playerPos.x - transform.position.x;
+		float yDiff = playerPos.y - transform.position.y;
 		float zDiff = playerPos.z - transform.position.z;
-		print (xDiff + " " + zDiff);
 
 		moveX = 0;
 		moveZ = 0;
-		if (maxAggroRange > Mathf.Abs (xDiff) && maxAggroRange > Mathf.Abs (zDiff)) { // in aggrorange on both axis
+		if (maxAggroRange > Mathf.Abs (xDiff) && 
+		    maxAggroRange > Mathf.Abs (yDiff) && 
+		    maxAggroRange > Mathf.Abs (zDiff)) { // in aggrorange on both axis
 			if (minAggroRange < xDiff) // in aggrorange on posetive x-axis
 				moveX = moveVelocity;
 			else if (xDiff < -minAggroRange) // in aggrorange on negative x-axis

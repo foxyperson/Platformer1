@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool hasDoubleJump = true;
 	private bool hasDepthWalk = true;
+	private bool hasControlCamera = true;
 
 
 	// Use this for initialization
@@ -49,19 +50,25 @@ public class PlayerController : MonoBehaviour {
 			moveZ = Input.GetAxis("Vertical") * moveVelocity;
 
 		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
-
+		// Camera controll
+		if (hasControlCamera) {
+			if (Input.GetKeyDown("e"))
+				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraController>().rotateCamera(0, 90, 0);
+			if (Input.GetKeyDown("q"))
+				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraController>().rotateCamera(0, -90, 0);
+		}
 		// Death
-		if (this.transform.position.y < deathDepth)
-			this.transform.position = respawnPos;
+		if (transform.position.y < deathDepth)
+			transform.position = respawnPos;
 	
 	}
 	// Grounded
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "Ground")
+		if (other.gameObject.tag != "Special Power")
 			grounded = true;
 	}
 	void OnTriggerExit(Collider other) {
-		if (other.gameObject.tag == "Ground")
+		if (other.gameObject.tag != "Special Power")
 			grounded = false;
 	}
 
@@ -71,5 +78,9 @@ public class PlayerController : MonoBehaviour {
 
 	public void setDepthWalk(bool b){
 		hasDepthWalk = b;
+	}
+
+	public void setControlCamera(bool b){
+		hasControlCamera = b;
 	}
 }
