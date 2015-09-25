@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour {
 	private bool hasDepthWalk = true;
 	private bool hasControlCamera = true;
 
+    private float rotationAmount = 90;
+    private float currentRotation = 0;
+
 
 	// Use this for initialization
 	void Start () {
@@ -45,17 +48,35 @@ public class PlayerController : MonoBehaviour {
 				jump = GetComponent<Rigidbody>().velocity.y;
 		}
 
-		moveX = Input.GetAxis("Horizontal") * moveVelocity;
-		if (hasDepthWalk)
-			moveZ = Input.GetAxis("Vertical") * moveVelocity;
+        if (currentRotation < 45) {
+            moveX = Input.GetAxis("Horizontal") * moveVelocity;
+            if (hasDepthWalk)
+                moveZ = Input.GetAxis("Vertical") * moveVelocity;
+        }else if (currentRotation < 135) {
+            moveX = Input.GetAxis("Vertical") * moveVelocity;
+            if (hasDepthWalk)
+                moveZ = -Input.GetAxis("Horizontal") * moveVelocity;
+        } else if (currentRotation < 225) {
+            moveX = -Input.GetAxis("Horizontal") * moveVelocity;
+            if (hasDepthWalk)
+                moveZ = -Input.GetAxis("Vertical") * moveVelocity;
+        } else {
+            moveX = -Input.GetAxis("Vertical") * moveVelocity;
+            if (hasDepthWalk)
+                moveZ = Input.GetAxis("Horizontal") * moveVelocity;
+        }
 
-		GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
+        GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
 		// Camera controll
 		if (hasControlCamera) {
-			if (Input.GetKeyDown("e"))
-				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraController>().rotateCamera(0, 90, 0);
-			if (Input.GetKeyDown("q"))
-				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraController>().rotateCamera(0, -90, 0);
+            if (Input.GetKeyDown("e")) {
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().rotateCamera(rotationAmount);
+                currentRotation = (currentRotation + rotationAmount) % 360;
+            }
+            if (Input.GetKeyDown("q")) {
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().rotateCamera(-rotationAmount);
+                currentRotation = ((currentRotation - rotationAmount) % 360 + 360) % 360;
+            }
 		}
 		// Death
 		if (transform.position.y < deathDepth)

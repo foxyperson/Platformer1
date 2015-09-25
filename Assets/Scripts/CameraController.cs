@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
 	
 	public Vector3 startingOffset;
 	private Vector3 offset;
+    private float yRotation = 0;
 
 	private Vector2 playerRelativeToEdge;
 
@@ -36,14 +37,9 @@ public class CameraController : MonoBehaviour {
 		} 
 	}
 	
-	public void rotateCamera(float x, float y, float z) {
-		transform.Rotate (x, y, z);
-		offset += new Vector3(startingOffset.y * Mathf.Sin(y*Mathf.PI/180), 0, startingOffset.y * Mathf.Cos(y*Mathf.PI/180));
-		float newX = ((offset.x + startingOffset.y - 1) % (startingOffset.y * 2)) + 1;
-		print(newX);
-		/*offset = new Vector3(((offset.x + startingOffset.y - 1) % (startingOffset.y*2)) + 1, 
-		                     ((offset.y + startingOffset.y - 1) % (startingOffset.y*2)) + 1, 
-		                     ((offset.z + startingOffset.y - 1) % (startingOffset.y*2)) + 1);*/
-		//print (offset);
+	public void rotateCamera(float degrees) {
+        transform.Rotate(0, degrees, 0);
+        yRotation = (yRotation + degrees) % 360;
+        offset = new Vector3(startingOffset.z * Mathf.Sin(yRotation * Mathf.PI/180), 0, startingOffset.z * Mathf.Cos(yRotation * Mathf.PI/180));
 	}
 }
