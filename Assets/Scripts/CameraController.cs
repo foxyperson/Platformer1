@@ -40,6 +40,6 @@ public class CameraController : MonoBehaviour {
 	public void rotateCamera(float degrees) {
         transform.Rotate(0, degrees, 0);
         yRotation = (yRotation + degrees) % 360;
-        offset = new Vector3(startingOffset.z * Mathf.Sin(yRotation * Mathf.PI/180), 0, startingOffset.z * Mathf.Cos(yRotation * Mathf.PI/180));
+        offset = new Vector3(startingOffset.z * Mathf.Sin(yRotation * Mathf.PI/180), offset.y, startingOffset.z * Mathf.Cos(yRotation * Mathf.PI/180));
 	}
 }
