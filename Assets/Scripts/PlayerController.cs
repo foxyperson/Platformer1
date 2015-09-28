@@ -48,23 +48,14 @@ public class PlayerController : MonoBehaviour {
 				jump = GetComponent<Rigidbody>().velocity.y;
 		}
 
-        if (currentRotation < 45) {
-            moveX = Input.GetAxis("Horizontal") * moveVelocity;
-            if (hasDepthWalk)
-                moveZ = Input.GetAxis("Vertical") * moveVelocity;
-        }else if (currentRotation < 135) {
-            moveX = Input.GetAxis("Vertical") * moveVelocity;
-            if (hasDepthWalk)
-                moveZ = -Input.GetAxis("Horizontal") * moveVelocity;
-        } else if (currentRotation < 225) {
-            moveX = -Input.GetAxis("Horizontal") * moveVelocity;
-            if (hasDepthWalk)
-                moveZ = -Input.GetAxis("Vertical") * moveVelocity;
-        } else {
-            moveX = -Input.GetAxis("Vertical") * moveVelocity;
-            if (hasDepthWalk)
-                moveZ = Input.GetAxis("Horizontal") * moveVelocity;
-        }
+        if (currentRotation < 45)
+            move("Horizontal", 1, "Vertical", 1);
+        else if (currentRotation < 135)
+            move("Vertical", 1, "Horizontal", -1);
+        else if (currentRotation < 225)
+            move("Horizontal", -1, "Vertical", -1);
+        else
+            move("Vertical", -1, "Horizontal", 1);
 
         GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
 		// Camera controll
@@ -81,15 +72,21 @@ public class PlayerController : MonoBehaviour {
 		// Death
 		if (transform.position.y < deathDepth)
 			transform.position = respawnPos;
-	
 	}
+
+    private void move (string xAxis, int xAxisInverter, string zAxis, int zAxisInverter) {
+        moveX = xAxisInverter * Input.GetAxis(xAxis) * moveVelocity;
+        if (hasDepthWalk)
+            moveZ = zAxisInverter * Input.GetAxis(zAxis) * moveVelocity;
+    }
+
 	// Grounded
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag != "Special Power")
+		if (other.gameObject.tag != "Special Power" && other.gameObject.tag != "Text Trigger")
 			grounded = true;
 	}
 	void OnTriggerExit(Collider other) {
-		if (other.gameObject.tag != "Special Power")
+		if (other.gameObject.tag != "Special Power" && other.gameObject.tag != "Text Trigger")
 			grounded = false;
 	}
 
