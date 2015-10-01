@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		respawnPos = transform.position; // for debugging purposes
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
