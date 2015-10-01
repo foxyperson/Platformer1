@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour {
 	public int deathDepth;
 	public Vector3 respawnPos;
 
-	private bool hasDoubleJump = true;
-	private bool hasDepthWalk = true;
-	private bool hasControlCamera = true;
+	private bool hasDoubleJump = false;
+	private bool hasDepthWalk = false;
+	private bool hasControlCamera = false;
 
     private float rotationAmount = 90;
     private float currentRotation = 0;
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
             move("Vertical", -1, "Horizontal", 1);
 
         GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
-		// Camera controll
+		// Camera control
 		if (hasControlCamera) {
             if (Input.GetKeyDown("e")) {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().rotateCamera(rotationAmount);
