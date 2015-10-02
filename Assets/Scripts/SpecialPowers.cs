@@ -15,7 +15,7 @@ public class SpecialPowers : MonoBehaviour {
     private Vector3 startPosition;
     private bool stateGoUp = true;
 
-    void start() {
+    void Start() {
         startPosition = transform.position;
     }
 
