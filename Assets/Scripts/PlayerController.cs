@@ -101,4 +101,8 @@ public class PlayerController : MonoBehaviour {
 	public void setControlCamera(bool b){
 		hasControlCamera = b;
 	}
+
+	public void setRespawnPos(Vector3 newRespawnPos) {
+		respawnPos = newRespawnPos;
+	}
 }

@@ -9,6 +9,7 @@ public class SwitchTo3D : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Player") {
 			Camera.main.orthographic = false;
+			level.SetActive(true);
 		}
 	}
 }
