@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour {
 	public int deathDepth;
 	public Vector3 respawnPos;
 
-	private bool hasDoubleJump = false;
-	private bool hasDepthWalk = false;
-	private bool hasControlCamera = false;
+	private bool hasDoubleJump = true;
+	private bool hasDepthWalk = true;
+	private bool hasControlCamera = true;
 
     private float rotationAmount = 90;
     private float currentRotation = 0;
