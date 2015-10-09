@@ -5,6 +5,7 @@ public class TextTriggerBox : MonoBehaviour {
 
     public GameObject oldInfoText;
     public GameObject newInfoText;
+    public GameObject nextTriggerBox;
 
     void OnTriggerEnter(Collider other)
     {
@@ -14,6 +15,9 @@ public class TextTriggerBox : MonoBehaviour {
                 Destroy(oldInfoText);
             if (newInfoText != null)
                 newInfoText.SetActive(true);
+            if (nextTriggerBox != null)
+                nextTriggerBox.SetActive(true);
+            Destroy(this);
         }
     }
 }

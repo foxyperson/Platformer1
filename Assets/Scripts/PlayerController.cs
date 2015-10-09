@@ -16,9 +16,10 @@ public class PlayerController : MonoBehaviour {
 	public int deathDepth;
 	public Vector3 respawnPos;
 
-	private bool hasDoubleJump = true;
-	private bool hasDepthWalk = true;
-	private bool hasControlCamera = true;
+    public bool debugMode;
+	private bool hasDoubleJump;
+	private bool hasDepthWalk;
+	private bool hasControlCamera;
 
     private float rotationAmount = 90;
     private float currentRotation = 0;
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		respawnPos = transform.position; // for debugging purposes
+        hasDoubleJump = debugMode;
+        hasDepthWalk = debugMode;
+        hasControlCamera = debugMode;
 	}
 
 	// Update is called once per frame
