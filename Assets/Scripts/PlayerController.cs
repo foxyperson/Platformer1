@@ -82,11 +82,11 @@ public class PlayerController : MonoBehaviour {
 
 	// Grounded
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag != "Special Power" && other.gameObject.tag != "Text Trigger")
+		if (other.gameObject.tag != "Special Power" && other.gameObject.tag != "Text Trigger" && other.gameObject.tag != "Checkpoint")
 			grounded = true;
 	}
 	void OnTriggerExit(Collider other) {
-		if (other.gameObject.tag != "Special Power" && other.gameObject.tag != "Text Trigger")
+		if (other.gameObject.tag != "Special Power" && other.gameObject.tag != "Text Trigger" && other.gameObject.tag != "Checkpoint")
 			grounded = false;
 	}
 

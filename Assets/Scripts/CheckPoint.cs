@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CheckPoint : MonoBehaviour {
+public class Checkpoint : MonoBehaviour {
 
 	private float rotation = 100;
 	private float moveSpeed = 0.02f;
