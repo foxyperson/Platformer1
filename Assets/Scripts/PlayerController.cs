@@ -64,11 +64,11 @@ public class PlayerController : MonoBehaviour {
         GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
 		// Camera control
 		if (hasControlCamera) {
-            if (Input.GetKeyDown("e")) {
+            if (Input.GetKeyDown("q")) {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().rotateCamera(rotationAmount);
                 currentRotation = (currentRotation + rotationAmount) % 360;
             }
-            if (Input.GetKeyDown("q")) {
+            if (Input.GetKeyDown("e")) {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().rotateCamera(-rotationAmount);
                 currentRotation = ((currentRotation - rotationAmount) % 360 + 360) % 360;
             }

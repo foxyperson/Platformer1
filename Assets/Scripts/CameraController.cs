@@ -9,37 +9,25 @@ public class CameraController : MonoBehaviour {
 	private Vector3 offset;
     private float yRotation = 0;
 
-	private Vector2 playerRelativeToEdge;
-
-	public float cameraLowestY;
-	private float offsetCameraLowestY;
-	public float cameraLowestX;
-	private float offsetCameraLowestX;
+	private float cameraRotationSpeed = 7;
+	private float cameraMoveSpeed = 50;
+	private Quaternion targetPos = Quaternion.Euler(0,0,0);
 
 	// Use this for initialization
 	void Start () {
 		offset = startingOffset;
 		transform.position = player.transform.position + offset;
-
-		Camera cam = Camera.main;
-		offsetCameraLowestY = cameraLowestY + cam.orthographicSize;
-		offsetCameraLowestX = cameraLowestX + cam.orthographicSize * cam.aspect;
 	}
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		transform.position = player.transform.position + offset;
-		if (transform.position.y <= offsetCameraLowestY) {
-			transform.position = new Vector3(transform.position.x, offsetCameraLowestY, transform.position.z);
-		} 
-		if (transform.position.x <= offsetCameraLowestX) {
-			transform.position = new Vector3(offsetCameraLowestX, transform.position.y, transform.position.z);
-		} 
+		transform.position = Vector3.MoveTowards (transform.position, player.transform.position + offset, Time.deltaTime*cameraMoveSpeed);
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetPos, Time.deltaTime*cameraRotationSpeed);
 	}
 	
 	public void rotateCamera(float degrees) {
-        transform.Rotate(0, degrees, 0);
         yRotation = (yRotation + degrees) % 360;
-        offset = new Vector3(startingOffset.z * Mathf.Sin(yRotation * Mathf.PI/180), offset.y, startingOffset.z * Mathf.Cos(yRotation * Mathf.PI/180));
+		targetPos = Quaternion.Euler (transform.rotation.x, yRotation, transform.rotation.y);
+        offset = new Vector3(startingOffset.z*Mathf.Sin(yRotation*Mathf.PI/180), offset.y, startingOffset.z*Mathf.Cos(yRotation * Mathf.PI/180));
 	}
 }
