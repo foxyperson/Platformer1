@@ -2,41 +2,39 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
-	
+
 	public float moveVelocity;
-	private float moveX;
-	private float moveZ;
+	private Vector3 move;
 	public float maxAggroRange;
 	public float minAggroRange;
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
-		float xDiff = playerPos.x - transform.position.x;
-		float yDiff = playerPos.y - transform.position.y;
-		float zDiff = playerPos.z - transform.position.z;
+		Vector3 diff = GameObject.FindGameObjectWithTag("Player").transform.position
+									 - transform.position;
 
-		moveX = 0;
-		moveZ = 0;
-		if (maxAggroRange > Mathf.Abs (xDiff) && 
-		    maxAggroRange > Mathf.Abs (yDiff) && 
-		    maxAggroRange > Mathf.Abs (zDiff)) { // in aggrorange on both axis
-			if (minAggroRange < xDiff) // in aggrorange on posetive x-axis
-				moveX = moveVelocity;
-			else if (xDiff < -minAggroRange) // in aggrorange on negative x-axis
-				moveX = -moveVelocity;
+		move = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+		if (maxAggroRange > Mathf.Abs (diff.x) &&
+		    maxAggroRange > Mathf.Abs (diff.y) &&
+		    maxAggroRange > Mathf.Abs (diff.z)) { // in aggrorange on all axis
+			if (minAggroRange < diff.x) // in aggrorange on posetive x-axis
+				move.x = moveVelocity;
+			else if (diff.x < -minAggroRange) // in aggrorange on negative x-axis
+				move.x = -moveVelocity;
 
-			if (minAggroRange < zDiff) // in aggrorange on posetive z-axis
-				moveZ = moveVelocity;
-			else if (zDiff < -minAggroRange)  // in aggrorange on negative z-axis
-				moveZ = -moveVelocity;
+			if (minAggroRange < diff.z) // in aggrorange on posetive z-axis
+				move.z= moveVelocity;
+			else if (diff.z < -minAggroRange)  // in aggrorange on negative z-axis
+				move.z = -moveVelocity;
 		}
 
-		GetComponent<Rigidbody>().velocity = new Vector3(moveX, GetComponent<Rigidbody>().velocity.y, moveZ);
+		move.y = GetComponent<Rigidbody>().velocity.y;
+
+		GetComponent<Rigidbody>().velocity = move;
 	}
 }
