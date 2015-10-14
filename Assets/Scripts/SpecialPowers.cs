@@ -6,7 +6,8 @@ public class SpecialPowers : MonoBehaviour {
     public enum specialPowers {
         ControlCamera,
         DepthWalk,
-        DoubleJump
+        DoubleJump,
+        Goal
     }
     public specialPowers newEffect;
 
@@ -43,6 +44,9 @@ public class SpecialPowers : MonoBehaviour {
                     break;
                 case specialPowers.DoubleJump:
                     other.gameObject.GetComponent<PlayerController>().setDoubleJump(true);
+                    break;
+                case specialPowers.Goal:
+                    Application.LoadLevel ("End Scene");
                     break;
             }
             Destroy(gameObject); // destroy itself
