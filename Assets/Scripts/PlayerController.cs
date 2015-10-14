@@ -12,17 +12,18 @@ public class PlayerController : MonoBehaviour {
 
 	private bool grounded;
 	private bool hasDoubleJumped = false;
+	private bool spin = false;
 
 	public int deathDepth;
 	public Vector3 respawnPos;
 
-    public bool debugMode;
+  public bool debugMode;
 	private bool hasDoubleJump;
 	private bool hasDepthWalk;
 	private bool hasControlCamera;
 
-    private float rotationAmount = 90;
-    private float currentRotation = 0;
+  private float rotationAmount = 90;
+  private float currentRotation = 0;
 
 
 	// Use this for initialization
@@ -47,21 +48,28 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Space) && hasDoubleJump && !(hasDoubleJumped)){
 				jump = jumpVelocity;
 				hasDoubleJumped = true;
+				spin = true;
 			}
 			else
 				jump = GetComponent<Rigidbody>().velocity.y;
 		}
 
-        if (currentRotation < 45)
-            move("Horizontal", 1, "Vertical", 1);
-        else if (currentRotation < 135)
-            move("Vertical", 1, "Horizontal", -1);
-        else if (currentRotation < 225)
-            move("Horizontal", -1, "Vertical", -1);
-        else
-            move("Vertical", -1, "Horizontal", 1);
+		if (spin) {
+			transform.Rotate(0, 20, 0);
+			if (Mathf.Round(transform.eulerAngles.y) == 0)
+			 	spin = false;
+		}
 
-        GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
+    if (currentRotation < 45)
+        move("Horizontal", 1, "Vertical", 1);
+    else if (currentRotation < 135)
+        move("Vertical", 1, "Horizontal", -1);
+    else if (currentRotation < 225)
+        move("Horizontal", -1, "Vertical", -1);
+    else
+        move("Vertical", -1, "Horizontal", 1);
+
+    GetComponent<Rigidbody>().velocity = new Vector3(moveX, jump, moveZ);
 		// Camera control
 		if (hasControlCamera) {
             if (Input.GetKeyDown("q")) {
