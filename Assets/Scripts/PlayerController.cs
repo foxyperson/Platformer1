@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
   private float rotationAmount = 90;
   private float currentRotation = 0;
 
+	private GameObject currentCheckpoint;
+
 
 	// Use this for initialization
 	void Start () {
@@ -116,5 +118,12 @@ public class PlayerController : MonoBehaviour {
 
 	public void setRespawnPos(Vector3 newRespawnPos) {
 		respawnPos = newRespawnPos;
+	}
+
+	public void setCurrentCheckpoint(GameObject checkPoint) {
+		if (currentCheckpoint  != null)
+			currentCheckpoint.GetComponent<Renderer>().material.color = new Color(0.7961f, 0.7843f, 0.3922f, 1f);
+		currentCheckpoint = checkPoint;
+			currentCheckpoint.GetComponent<Renderer>().material.color = new Color(1f, 0.4f, 0.4f, 1f);
 	}
 }

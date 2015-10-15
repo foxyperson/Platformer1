@@ -27,6 +27,7 @@ public class Checkpoint : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Player") {
 			other.gameObject.GetComponent<PlayerController>().setRespawnPos(transform.position);
+			other.gameObject.GetComponent<PlayerController>().setCurrentCheckpoint(gameObject);
 		}
 	}
 }
